@@ -71,62 +71,11 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal custom colors -->
 
-  <!-- 'About' modal -->
-  <div class="modal fade" id="about">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"> <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title">About forna</h4>
-        </div>
-        <div class="modal-body">
-            <!--
-          <div style="float: right;">
-            <img src="img/favicon-192x192.png" alt="forna logo" title="forna logo" width="150" align="right" />
-          </div>
-            -->
-          <h1>RNA Secondary Structure Visualization Using a Force Directed Graph Layout</h1>
-          <h4 id="overview">Overview</h4>
-          <p>TriplexRNA database embeds the <code>forna</code> package: a web interface for displaying RNA secondary structures using the
-          <a href="https://github.com/mbostock/d3/wiki/Force-Layout" target="_blank">force-directed graph layout</a> provided by the
-          <a href="http://d3js.org/" target="_blank">d3.js visualization library</a>.<br/>
-          The package's front-end makes use of <a href="http://getbootstrap.com">Bootstrap</a> and
-          <a href="http://knockoutjs.com/" target="_blank">Knockout.js</a>, while the back-end uses
-          <a href="http://flask.pocoo.org/" target="_blank">Flask</a>. <br/>
-          RNA structure manipulation and graph construction are created using the python
-          <a href="http://www.tbi.univie.ac.at/~pkerp/forgi/" target="_blank">forgi</a> RNA structure manipulation library and the provided
-          <code>forna.py</code> script.<br/>
-          Forna heavily depends on the python bindings of the
-          <a href="http://www.tbi.univie.ac.at/RNA/" target="_blank">ViennaRNA</a> package.</p>
-          <h4 id="usage">Usage</h4>
-          <p>For a comprehensive usage of the forna visualization tool, please refer to its
-          <a href="http://nibiru.tbi.univie.ac.at/forna/documentation.html" target="_blank">official documentation page</a>.<br/>
-          Questions and/or comments related to the package can be sent to <a href="mailto:forna@tbi.univie.ac.at">forna@tbi.univie.ac.at</a></p>
-          <h4 id="citations">Citations</h4>
-           [1] Gendron P, Lemieux S, Major F(2001). Quantitative analysis of nucleic acid three-dimensional structures. J Mol Biol 308:919–936.
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
 
   <!-- Main content starts here! -->
   <!-- the graph goes here -->
   <div class="gallery" id='chart'>
 
-    <div class="menu-top">
-      <div class="menu-left">
-      </div>
-      
-      <div class="menu-right">
-        <div class="btn-group" id="About" data-toggle="tooltip" data-placement="bottom" title="About" data-delay='{"show":"800", "hide":"50"}'>
-          <button data-bind="click: showAbout" class="btn btn-default"><span class="glyphicon glyphicon-question-sign"></span></button>
-        </div>
-      </div>
-    </div>
-    
     <div class="menu-bottom">
       <div class="menu-left">
         <div class="btn-group" data-toggle="tooltip" data-placement="top" title="Animation (Key: Space)" data-delay='{"show":"800", "hide":"50"}'>
