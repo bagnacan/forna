@@ -407,6 +407,7 @@ function ColorViewModel() {
       //cs.normalizeColors();
 
       rnaView.fornac.addCustomColors(cs.colors_json);
+      alert(cs.colors_json);
       rnaView.colors('custom');
       rnaView.fornac.changeColorScheme(rnaView.colors());
 
@@ -530,20 +531,33 @@ function AddAPIViewModel() {
         break;
     case 'url':
         //forna/?id=url/molecule_name&sequence=AGAUGA&structure=......
+        var triplex = queries['id'].split("/")[1];
+        var gene    = queries['gene'];
+        var mirna1  = queries['mirna1'];
+        var mirna2  = queries['mirna2'];
+
         if (queries['sequence'] === undefined) {
             self.newInputError("ERROR: You have to define an input sequence!");
             break;
         }
-        if (queries['structure'] === undefined) { queries['structure'] = ''; }
+
+        if (queries['structure'] === undefined) {
+            queries['structure'] = '';
+        }
+        
         var header = queries['id'].split("/")[1];
+
         if ("start" in queries) {
             header += "|start="+queries['start'];
         } else if ("end" in queries) {
             header += "|end="+queries['end'];
         }
+
         rnaManager.add(queries['sequence'],queries['structure'],header);
-        //alert(queries['triplex']);
-        rnaManager.setTitle(queries['triplex'], queries['gene'], queries['mirna1'], queries['mirna2']);
+
+        // create a meaningful title for the visualized triplex
+        rnaManager.setTitle(triplex, gene, mirna1, mirna2);
+
         rnaManager.submit();
         //console.log("loaded from URL API");
         $('#addAPI').modal('hide');
@@ -555,8 +569,10 @@ function AddAPIViewModel() {
 
     // use the color information if available
     // &colors=>name\n0.1\n0.5\n0.9\n1
+    // &colors=>name\nX-Y:color\n(Y+1)-Z:color
     if (queries['colors'] !== undefined) {
-        setColors(queries['colors'].replace(/\%3D/g,"=").replace(/\%3E/g,">").replace(/\%5C/g,"\\").replace(/\%20/g,"\ ").replace(/\\n/g,"\n"));
+        //setColors(queries['colors'].replace(/\%3D/g,"=").replace(/\%3E/g,">").replace(/\%5C/g,"\\").replace(/\%20/g,"\ ").replace(/\\n/g,"\n"));
+        setColors(queries['colors'].replace(/\%3D/g,"=").replace(/\%3E/g,">").replace(/\%5C/g,"\\").replace(/\%20/g,"\ ").replace(/\\n/g,"\n").replace(/\%3A/g, ":"));
     }
   };
 }
