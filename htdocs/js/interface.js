@@ -1229,11 +1229,13 @@ function RNAViewModel() {
     self.fornac.deaf = true;
   };
 
+  /*
   self.showCustomColors = function() {
     //$('#ColorSubmit').button('reset');
     $('#addColors').modal('show');
     self.fornac.deaf = true;
   };
+  */
 
   self.showAbout = function() {
     $('#about').modal('show');

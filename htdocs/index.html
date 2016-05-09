@@ -46,32 +46,6 @@
 <body>
 <div id="main">
 
-  <!-- 'Custom Colors' modal -->
-  <div class="modal fade" id="addColors" > <!-- data-bind="showModal: loaded"-->
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title">Edit Color Scheme</h4>
-        </div>
-        <div class="modal-body">
-          <form role="form">
-            <div class="form-group">
-              <label for="ColorInput">Color Specifications:</label>
-              <textarea type="text" class="form-control" id="ColorInput" placeholder="" rows="2" data-bind="value: input" autofocus required></textarea>
-            </div>
-            <div class="alert alert-danger" role="alert" data-bind="visible: inputError().length > 0, html: inputError" id="inputError"> </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancelColor">Cancel</button>
-          <button type="submit" id="ColorSubmit" data-bind="click: colorSubmit" class="btn btn-primary" data-loading-text="Loading...">Submit</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal custom colors -->
-
-
   <!-- Main content starts here! -->
   <!-- the graph goes here -->
   <div class="gallery" id='chart'>
@@ -109,8 +83,7 @@
             </li>
             <li role="presentation" data-bind="css: { active: colors() === 'custom' }">
               <label role="menuitem">
-                <input type="radio" name="colors" data-bind="checked: colors, checkedValue: 'custom', checkedVaue: 'custom'"> Custom&nbsp;
-                <button type="button" role="menuitem" data-bind="click: showCustomColors, attr: { 'class': colors() === 'custom' ? 'btn btn-xs btn-default' : 'btn btn-xs btn-primary' }">Set</button>
+                <input type="radio" name="colors" data-bind="checked: colors, checkedValue: 'custom', checkedVaue: 'custom'"> Triplex
               </label>
             </li>
           </ul>
