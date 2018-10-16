@@ -544,7 +544,7 @@ function AddAPIViewModel() {
         if (queries['structure'] === undefined) {
             queries['structure'] = '';
         }
-        
+
         var header = queries['id'].split("/")[1];
 
         if ("start" in queries) {
@@ -1330,4 +1330,3 @@ ko.applyBindings(addMmcifView, document.getElementById('addMMCIF'));
 ko.applyBindings(addJSONView, document.getElementById('addJSON'));
 ko.applyBindings(addAPIView, document.getElementById('addAPI'));
 ko.applyBindings(shareView, document.getElementById('shareView'));
-
