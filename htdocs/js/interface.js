@@ -9,6 +9,7 @@
 /* global ko, Element, err */
 
 serverURL = "";
+title = '';
 
 $(window).resize(function() {
  setPlottingArea();
@@ -233,6 +234,11 @@ function RNAManager( done, newError ) {
         self.newMolecules.push(new RNA(sequence, structure, header, start, reportError));
     };
 
+    // set a meaningful title for the triplex
+    self.setTitle = function(triplex, gene, mirna1, mirna2) {
+        title = triplex + "__" + gene + "_" + mirna1 + "_" + mirna2;
+    };
+
     self.submit = function() {
         self.submitted(true);
     };
@@ -401,6 +407,7 @@ function ColorViewModel() {
       //cs.normalizeColors();
 
       rnaView.fornac.addCustomColors(cs.colors_json);
+      alert(cs.colors_json);
       rnaView.colors('custom');
       rnaView.fornac.changeColorScheme(rnaView.colors());
 
@@ -524,18 +531,33 @@ function AddAPIViewModel() {
         break;
     case 'url':
         //forna/?id=url/molecule_name&sequence=AGAUGA&structure=......
+        var triplex = queries['id'].split("/")[1];
+        var gene    = queries['gene'];
+        var mirna1  = queries['mirna1'];
+        var mirna2  = queries['mirna2'];
+
         if (queries['sequence'] === undefined) {
             self.newInputError("ERROR: You have to define an input sequence!");
             break;
         }
-        if (queries['structure'] === undefined) { queries['structure'] = ''; }
+
+        if (queries['structure'] === undefined) {
+            queries['structure'] = '';
+        }
+        
         var header = queries['id'].split("/")[1];
+
         if ("start" in queries) {
             header += "|start="+queries['start'];
         } else if ("end" in queries) {
             header += "|end="+queries['end'];
         }
+
         rnaManager.add(queries['sequence'],queries['structure'],header);
+
+        // create a meaningful title for the visualized triplex
+        rnaManager.setTitle(triplex, gene, mirna1, mirna2);
+
         rnaManager.submit();
         //console.log("loaded from URL API");
         $('#addAPI').modal('hide');
@@ -547,8 +569,10 @@ function AddAPIViewModel() {
 
     // use the color information if available
     // &colors=>name\n0.1\n0.5\n0.9\n1
+    // &colors=>name\nX-Y:color\n(Y+1)-Z:color
     if (queries['colors'] !== undefined) {
-        setColors(queries['colors'].replace(/\%3D/g,"=").replace(/\%3E/g,">").replace(/\%5C/g,"\\").replace(/\%20/g,"\ ").replace(/\\n/g,"\n"));
+        //setColors(queries['colors'].replace(/\%3D/g,"=").replace(/\%3E/g,">").replace(/\%5C/g,"\\").replace(/\%20/g,"\ ").replace(/\\n/g,"\n"));
+        setColors(queries['colors'].replace(/\%3D/g,"=").replace(/\%3E/g,">").replace(/\%5C/g,"\\").replace(/\%20/g,"\ ").replace(/\\n/g,"\n").replace(/\%3A/g, ":"));
     }
   };
 }
@@ -1205,11 +1229,13 @@ function RNAViewModel() {
     self.fornac.deaf = true;
   };
 
+  /*
   self.showCustomColors = function() {
     //$('#ColorSubmit').button('reset');
     $('#addColors').modal('show');
     self.fornac.deaf = true;
   };
+  */
 
   self.showAbout = function() {
     $('#about').modal('show');
@@ -1232,11 +1258,15 @@ function RNAViewModel() {
   self.saveJSON = function() {
       var data_string = self.fornac.toJSON();
       var blob = new Blob([data_string], {type: "application/json"});
-      saveAs(blob, 'molecule.json');
+      // save with a meaningful title
+      //saveAs(blob, 'molecule.json');
+      saveAs(blob, title + '.json');
   };
 
   self.savePNG = function() {
-    saveSvgAsPng(document.getElementById('plotting-area'), 'rna.png', 4);
+    // save with a meaningful title
+    //saveSvgAsPng(document.getElementById('plotting-area'), 'rna.png', 4);
+    saveSvgAsPng(document.getElementById('plotting-area'), title + '.png', 4);
   };
 
   self.saveSVG = function() {
@@ -1275,8 +1305,11 @@ function RNAViewModel() {
 
     // use FileSave to get a downloadable SVG File
     var file = new Blob([source], {type: "data:image/svg+xml;charset=utf-8"});
-    saveAs(file, "rna.svg");
+    // save with a meaningful title
+    //saveAs(file, "rna.svg");
+    saveAs(file, title + ".svg");
   };
+
 }
 
 // bind the model to the ui
@@ -1297,3 +1330,4 @@ ko.applyBindings(addMmcifView, document.getElementById('addMMCIF'));
 ko.applyBindings(addJSONView, document.getElementById('addJSON'));
 ko.applyBindings(addAPIView, document.getElementById('addAPI'));
 ko.applyBindings(shareView, document.getElementById('shareView'));
+
