@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 """forna_server.py: A server for converting RNA secondary structures to force-directed graphs
    and doing something more."""
@@ -39,6 +39,10 @@ def create_app(static):
     def custom405(error):
         app.logger.info(error)
         return error.description, 400
+
+    @app.route('/ping', methods=['GET'])
+    def ping():
+        return 'pong'
 
     @app.route('/json_to_json', methods=['POST'])
     # pylint: disable=W0612
